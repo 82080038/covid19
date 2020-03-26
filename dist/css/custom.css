@@ -1,5 +1,9 @@
-.foto{
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
+.customnb{
+	margin-left: auto!important;
+}
+
+@media only screen and (max-width: 500px) {
+	.customnb{
+		margin-right: auto!important;
+	}
 }
