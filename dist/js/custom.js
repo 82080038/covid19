@@ -25,6 +25,7 @@ $.ajax({
         }
     });
 
+
     $.ajax({
         url: API_ROOT_LUAR+'/indonesia/',
         dataType: 'json',
