@@ -66,7 +66,7 @@ $.ajax({
         var arrData = new Array();
           for (var i=0; i<data.length; i++) {
                 arrLabels[i] = data[i].attributes.date;
-                arrData[i] = data[i].attributes.jumlah;
+                arrData[i] = data[i].attributes.jumlah.replace(',','');
             }
            /* Chartjs (#total-coversations) */
           var ctx = document.getElementById('total-coversations').getContext('2d');
