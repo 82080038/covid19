@@ -15,7 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="dist/css/custom.min.css">
+  <link rel="stylesheet" href="dist/css/custom.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -118,7 +118,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h3 class="card-title"><strong>Statistik Kasus Coronavirus di Indonesia</strong></h3>
               </div>
               <!-- /.card-header -->
-                <div class="card-body">
+                <div class="card-body" style="text-align: center;">
+                      <!-- Image loader -->
+                              <img id='customloader' src='dist/img/loading.gif' width='64px' height='64px' style="display: none">
+                            
+                            <!-- Image loader -->
                     <div class="chart-wrapper">
                       <canvas id="total-coversations" class="h-160 chart-dropshadow-info"></canvas>
                     </div>

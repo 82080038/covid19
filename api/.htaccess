@@ -1,0 +1,4 @@
+RewriteEngine On # Turn on the rewriting engine
+RewriteRule ^statistik/?$ statistik.php [NC,L]
+RewriteRule ^global/?$ global.php [NC,L]
+RewriteRule ^cronsave/?$ cronsave.php [NC,L]

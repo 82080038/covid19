@@ -1,10 +1,9 @@
-// const darkmode =  new Darkmode();
-  // darkmode.toggle();
-  // console.log(darkmode.isActivated());
 $(function() {
+const API_ROOT_LUAR = 'https://api.kawalcorona.com';
+const API_ROOT_DALAM = 'http://halalmart.durioindigo.co.id/covid/api';
 const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 $.ajax({
-        url: 'https://api.kawalcorona.com',
+        url: API_ROOT_LUAR,
         dataType: 'json',
         success: function(data) {
             for (var i=0; i<data.length; i++) {
@@ -27,7 +26,7 @@ $.ajax({
     });
 
     $.ajax({
-        url: 'https://api.kawalcorona.com/indonesia/',
+        url: API_ROOT_LUAR+'/indonesia/',
         dataType: 'json',
         success: function(data) {
           document.getElementById("p").innerHTML=data[0].positif + ' Orang';
@@ -40,9 +39,9 @@ $.ajax({
     });
 
     $.ajax({
-        url: 'https://api.kawalcorona.com/indonesia/provinsi/',
+        url: API_ROOT_LUAR+'/indonesia/provinsi/',
         dataType: 'json',
-        success: function(data) {         
+        success: function(data) {
             var tb,no=1;
             for (var i=0; i<data.length; i++) {
                 tb += '<tr><td>' + no + '</td><td>' + data[i].attributes.Provinsi + '</td><td>' + data[i].attributes.Kasus_Posi + '</td><td>'+ data[i].attributes.Kasus_Semb + '</td><td>'+ data[i].attributes.Kasus_Meni + '</td></tr>';
@@ -54,81 +53,105 @@ $.ajax({
             alert('Error: ' + textStatus + ' - ' + errorThrown);
         }
     });
+    $.ajax({
+        url: API_ROOT_DALAM+'/statistik',
+        dataType: 'json',
+        beforeSend: function(){
+          // Show image container
+          $("#customloader").show();
+       },
+        success: function(data) {
+        var arrLabels = new Array();         
+        var arrData = new Array();
+          for (var i=0; i<data.length; i++) {
+                arrLabels[i] = data[i].attributes.date;
+                arrData[i] = data[i].attributes.jumlah;
+            }
+           /* Chartjs (#total-coversations) */
+          var ctx = document.getElementById('total-coversations').getContext('2d');
+            var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: arrLabels,
+              datasets: [{
+                label: "Positif",
+                borderColor: '#F32013',
+                borderWidth: 4,
+                backgroundColor: 'transparent',
+                data: arrData
+              }]
+            },
+                options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              tooltips: {
+                mode: 'index',
+                titleFontSize: 12,
+                titleFontColor: '#000',
+                bodyFontColor: '#000',
+                backgroundColor: '#fff',
+                cornerRadius: 3,
+                intersect: false,
+              },
+              legend: {
+                display: false,
+                labels: {
+                  usePointStyle: true,
+                },
+              },
+              scales: {
+                xAxes: [{
+                  ticks: {
+                    fontColor: "#77778e",
 
-    /* Chartjs (#total-coversations) */
-  var ctx = document.getElementById('total-coversations').getContext('2d');
-    var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["2 Mar", "3 Mar", "4 Mar", "5 Mar", "6 Mar", "7 Mar", "8 Mar","9 Mar", "10 Mar", "11 Mar", "12 Mar", "13 Mar", "14 Mar", "15 Mar", "16 Mar", "17 Mar", "18 Mar", "19 Mar", "20 Mar", "21 Mar", "22 Mar", "23 Mar", "24 Mar", "25 Mar", "26 Mar"],
-      datasets: [{
-        label: "Positif",
-        borderColor: '#F32013',
-        borderWidth: 4,
-        backgroundColor: 'transparent',
-        data: [2, 2, 2, 2, 4, 4, 6, 19, 27, 34, 34, 69, 96, 117, 134, 172, 227, 308, 369, 450, 514, 579, 686, 790, 893]
-      }]
-    },
-        options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      tooltips: {
-        mode: 'index',
-        titleFontSize: 12,
-        titleFontColor: '#000',
-        bodyFontColor: '#000',
-        backgroundColor: '#fff',
-        cornerRadius: 3,
-        intersect: false,
-      },
-      legend: {
-        display: false,
-        labels: {
-          usePointStyle: true,
+                   },
+                  display: true,
+                  gridLines: {
+                    display: true,
+                    color: 'rgba(119, 119, 142, 0.2)',
+                    drawBorder: false
+                  },
+                  scaleLabel: {
+                    display: false,
+                    labelString: 'Month',
+                    fontColor: 'rgba(0,0,0,0.8)'
+                  }
+                }],
+                yAxes: [{
+                  ticks: {
+                    fontColor: "#77778e",
+                   },
+                  display: true,
+                  gridLines: {
+                    display: false,
+                    color: 'rgba(119, 119, 142, 0.2)',
+                    drawBorder: false
+                  },
+                  scaleLabel: {
+                    display: false,
+                    labelString: 'sales',
+                    fontColor: 'transparent'
+                  }
+                }]
+              },
+              title: {
+                display: false,
+                text: 'Normal Legend'
+              }
+            }
+            });
+          /* Chartjs (#total-coversations) closed */
+          
         },
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            fontColor: "#77778e",
-
-           },
-          display: true,
-          gridLines: {
-            display: true,
-            color: 'rgba(119, 119, 142, 0.2)',
-            drawBorder: false
-          },
-          scaleLabel: {
-            display: false,
-            labelString: 'Month',
-            fontColor: 'rgba(0,0,0,0.8)'
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            fontColor: "#77778e",
-           },
-          display: true,
-          gridLines: {
-            display: false,
-            color: 'rgba(119, 119, 142, 0.2)',
-            drawBorder: false
-          },
-          scaleLabel: {
-            display: false,
-            labelString: 'sales',
-            fontColor: 'transparent'
-          }
-        }]
-      },
-      title: {
-        display: false,
-        text: 'Normal Legend'
-      }
-    }
+         complete:function(data){
+        // Hide image container
+        $("#customloader").hide();
+       },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('Error: ' + textStatus + ' - ' + errorThrown);
+        }
     });
-  /* Chartjs (#total-coversations) closed */
+  
 
     });
   
