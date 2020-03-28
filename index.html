@@ -18,6 +18,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- DataTables -->
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <link rel="stylesheet" href="dist/css/custom.css">
+  <style type="text/css">
+    #map {
+      height: 400px;
+      
+    }
+  </style>
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -167,6 +173,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
         </div>
 
+        <!-- ROW 4 -->
+          <div class="row" >
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><strong>Peta (Dalam Pengembangan)</strong></h3>
+              </div>
+              <!-- /.card-header -->
+                <div class="card-body" style="text-align: center;">
+                     
+                    <div id="map"></div>
+                  </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
@@ -202,5 +226,103 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="dist/js/adminlte.min.js"></script>
 
 <script src="dist/js/custom.js"></script>
+
+<!-- Replace the value of the key parameter with your own API key. -->
+<!-- key=AIzaSyD5YSshqAMENaAlOj763qr2hccjLRajwiQ -->
+<script async defer
+src="https://maps.googleapis.com/maps/api/key=AIzaSyD5YSshqAMENaAlOj763qr2hccjLRajwiQ&js?callback=initMap">
+</script>
+
+<script type="text/javascript">
+  var map;
+function initMap() {
+  map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: new google.maps.LatLng(-2.600029, 118.015776), zoom: 5});
+
+  var iconBase =
+      'https://developers.google.com/maps/documentation/javascript/examples/full/images/';
+
+  var icons = {
+    parking: {
+      icon: iconBase + 'parking_lot_maps.png'
+    },
+    library: {
+      icon: iconBase + 'library_maps.png'
+    },
+    info: {
+      icon: iconBase + 'info-i_maps.png'
+    }
+  };
+  function generateContent(province){
+    return province;
+  }
+  var features = [
+    {
+      position: new google.maps.LatLng( -6.200000, 106.816666),
+      type: 'info',
+      content: generateContent('DKI Jakarta')
+    }, {
+      position: new google.maps.LatLng(-7.025253, 107.519760),
+      type: 'info',
+      content:  generateContent('Jawa Barat') 
+    }, {
+      position: new google.maps.LatLng(-6.178306, 106.631889),
+      type: 'info',
+      content:  generateContent('Banten') 
+    }, {
+      position: new google.maps.LatLng(-7.866688, 111.466614), 
+      type: 'info',
+      content:  generateContent('Jawa Timur') 
+    }, {
+      position: new google.maps.LatLng(-6.966667, 110.416664),
+      type: 'info',
+      content:  generateContent('Jawa Tengah') 
+    }, {
+      position: new google.maps.LatLng(-5.135399, 119.423790),
+      type: 'info',
+      content:  generateContent('Sulawesi Selatan') 
+    }, {
+      position: new google.maps.LatLng(-33.91784, 151.23094),
+      type: 'info',
+      content:  generateContent('') 
+    }, {
+      position: new google.maps.LatLng(-33.91682, 151.23149),
+      type: 'info',
+      content:  generateContent('') 
+    }, {
+      position: new google.maps.LatLng(-33.91790, 151.23463),
+      type: 'info',
+      content:  generateContent('') 
+    }, {
+      position: new google.maps.LatLng(-33.91666, 151.23468),
+      type: 'info',
+      content:  generateContent('') 
+    }, {
+      position: new google.maps.LatLng(-33.916988, 151.233640),
+      type: 'info',
+      content:  generateContent('') 
+    }
+  ];
+
+  // Create markers.
+  for (var i = 0; i < features.length; i++) {
+  var infowindow = new google.maps.InfoWindow({
+      content: features[i].content
+    });
+    var marker = new google.maps.Marker({
+      position: features[i].position,
+      icon: icons[features[i].type].icon,
+      map: map
+    });
+     google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+      return function() {
+          infowindow.setContent(content);
+          infowindow.open(map,marker);
+      };
+  })(marker,features[i].content,infowindow));  
+  };
+}
+</script>
 </body>
 </html>

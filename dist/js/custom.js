@@ -1,7 +1,7 @@
 $(function() {
 var dataTable;
 const API_ROOT_LUAR = 'https://api.kawalcorona.com';
-const API_ROOT_DALAM = 'https://halalmart.durioindigo.co.id/covid/api';
+const API_ROOT_DALAM = 'http://kokngopas.my.id/api';
 const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 $.ajax({
         url: API_ROOT_LUAR,

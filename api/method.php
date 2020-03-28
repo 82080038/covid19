@@ -6,6 +6,7 @@ class Statistik
 	public  function get_statistik()
 	{
 		header('Content-Type: application/json');
+		header('Access-Control-Allow-Origin: *');  
 		global $mysqli;
 		$query="SELECT * FROM tbl_statistik where tanggal < CURDATE() order by tanggal ASC";
 		$response=array();
@@ -17,10 +18,9 @@ class Statistik
 			$r['jumlah'] = $row->jumlah;
 			$response[]['attributes']= $r;
 		}
-		$url = 'https://api.kawalcorona.com/indonesia'; // path to your JSON file
+		$url = 'https://api.kawalcorona.com/indonesia/'; // path to your JSON file
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$json_parse = json_decode($data); // decode the JSON feed
-
 		$r['date'] = date('d M');
 		$r['jumlah'] = $json_parse[0]->positif;
 		$response[]['attributes']= $r;
@@ -60,7 +60,7 @@ class Cronsave
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$json_parse = json_decode($data); // decode the JSON feed
 
-		$positif = $json_parse[0]->positif;
+		$positif = str_replace(",","",$json_parse[0]->positif);
 		if($cek>0){
 			// update
 			$rs = mysqli_query($mysqli, "UPDATE tbl_statistik SET
