@@ -1,4 +1,5 @@
 $(function() {
+var dataTable;
 const API_ROOT_LUAR = 'https://api.kawalcorona.com';
 const API_ROOT_DALAM = 'https://halalmart.durioindigo.co.id/covid/api';
 const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -49,6 +50,19 @@ $.ajax({
                 no++;
             }
             $('tbody').append(tb);
+            dataTable = $('#tb_statistik').DataTable({
+              "paging": false,
+              "lengthChange": false,
+              "searching": true,
+              "ordering": true,
+              "info": false,
+              "autoWidth": false
+            });
+            $("#filterBox").keyup(function() {
+                console.log(dataTable.search(this.value).draw());
+            }); 
+            $('#tb_statistik_filter').hide();
+            
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert('Error: ' + textStatus + ' - ' + errorThrown);

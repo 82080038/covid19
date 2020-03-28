@@ -15,6 +15,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <link rel="stylesheet" href="dist/css/custom.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -140,10 +142,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title"><strong>Data Kasus Coronavirus di Indonesia Berdasarkan Provinsi</strong></h3>
+                <label class="float-right" ><input type="search" class="form-control form-control-sm" placeholder="Pencarian" id="filterBox"></label>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0" style="height: 500px;">
-                <table class="table table-head-fixed">
+                <table class="table table-head-fixed" id="tb_statistik">
                   <thead>
                     <tr>
                       <th>NO.</th>
@@ -190,12 +193,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="plugins/datatables/jquery.dataTables.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- ChartJS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 
 <script src="dist/js/custom.js"></script>
-
 </body>
 </html>
