@@ -77,10 +77,14 @@ $.ajax({
        },
         success: function(data) {
         var arrLabels = new Array();         
-        var arrData = new Array();
+        var arrDataPositif = new Array();
+        var arrDataSembuh = new Array();
+        var arrDataMeninggal = new Array();
           for (var i=0; i<data.length; i++) {
                 arrLabels[i] = data[i].attributes.date;
-                arrData[i] = data[i].attributes.jumlah.replace(',','');
+                arrDataPositif[i] = data[i].attributes.jumlah_positif.replace(',','');
+                arrDataSembuh[i] = data[i].attributes.jumlah_sembuh.replace(',','');
+                arrDataMeninggal[i] = data[i].attributes.jumlah_meninggal.replace(',','');
             }
            /* Chartjs (#total-coversations) */
           var ctx = document.getElementById('total-coversations').getContext('2d');
@@ -88,13 +92,29 @@ $.ajax({
             type: 'line',
             data: {
               labels: arrLabels,
-              datasets: [{
-                label: "Positif",
-                borderColor: '#F32013',
-                borderWidth: 4,
-                backgroundColor: 'transparent',
-                data: arrData
-              }]
+              datasets: [
+                {
+                  label: "Positif",
+                  borderColor: '#F32013',
+                  borderWidth: 4,
+                  backgroundColor: 'transparent',
+                  data: arrDataPositif
+                },
+                {
+                  label: "Sembuh",
+                  borderColor: '#17A2B8',
+                  borderWidth: 4,
+                  backgroundColor: 'transparent',
+                  data: arrDataSembuh
+                },
+                {
+                  label: "Meninggal",
+                  borderColor: '#FFC107',
+                  borderWidth: 4,
+                  backgroundColor: 'transparent',
+                  data: arrDataMeninggal
+                }
+              ]
             },
                 options: {
               responsive: true,
@@ -109,7 +129,7 @@ $.ajax({
                 intersect: false,
               },
               legend: {
-                display: false,
+                display: true,
                 labels: {
                   usePointStyle: true,
                 },

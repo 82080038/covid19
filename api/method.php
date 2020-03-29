@@ -15,14 +15,18 @@ class Statistik
 		{
 		    $date=date_create($row->tanggal);
 			$r['date'] = date_format($date,"d M");
-			$r['jumlah'] = $row->jumlah;
+			$r['jumlah_positif'] = $row->jumlah_positif;
+			$r['jumlah_sembuh'] = $row->jumlah_sembuh;
+			$r['jumlah_meninggal'] = $row->jumlah_meninggal;
 			$response[]['attributes']= $r;
 		}
 		$url = 'https://api.kawalcorona.com/indonesia/'; // path to your JSON file
 		$data = file_get_contents($url); // put the contents of the file into a variable
 		$json_parse = json_decode($data); // decode the JSON feed
 		$r['date'] = date('d M');
-		$r['jumlah'] = $json_parse[0]->positif;
+		$r['jumlah_positif'] = $json_parse[0]->positif;
+		$r['jumlah_sembuh'] = $json_parse[0]->sembuh;
+		$r['jumlah_meninggal'] = $json_parse[0]->meninggal;
 		$response[]['attributes']= $r;
 
   	 	echo json_encode($response);
@@ -61,10 +65,14 @@ class Cronsave
 		$json_parse = json_decode($data); // decode the JSON feed
 
 		$positif = str_replace(",","",$json_parse[0]->positif);
+		$sembuh = str_replace(",","",$json_parse[0]->sembuh);
+		$meninggal = str_replace(",","",$json_parse[0]->meninggal);
 		if($cek>0){
 			// update
 			$rs = mysqli_query($mysqli, "UPDATE tbl_statistik SET
-		        jumlah = '$positif'
+		        jumlah_positif = '$positif',
+		        jumlah_sembuh = '$sembuh',
+		        jumlah_meninggal = '$meninggal'
 		        WHERE tanggal=CURDATE()");
 
 			if($rs)
@@ -77,8 +85,10 @@ class Cronsave
 		}else{
 			// save
 			$rs = mysqli_query($mysqli, "INSERT INTO tbl_statistik SET
-					tanggal = NOW(),
-					jumlah = '$positif'");
+					tanggal = CURDATE(),
+					jumlah_positif = '$positif',
+			        jumlah_sembuh = '$sembuh',
+			        jumlah_meninggal = '$meninggal'");
 			if($rs)
 			{
 				$response=array(
