@@ -41,33 +41,97 @@ $.ajax({
     });
 
     $.ajax({
-        url: API_ROOT_LUAR+'/indonesia/provinsi/',
+        url: API_ROOT_DALAM+'/latlong/',
         dataType: 'json',
         success: function(data) {
-            var tb,no=1;
+         var latlong = [];
             for (var i=0; i<data.length; i++) {
-                tb += '<tr><td>' + no + '</td><td>' + data[i].attributes.Provinsi + '</td><td>' + data[i].attributes.Kasus_Posi + '</td><td>'+ data[i].attributes.Kasus_Semb + '</td><td>'+ data[i].attributes.Kasus_Meni + '</td></tr>';
-                no++;
+              latlong[data[i].attributes.Kode_Provi] = [data[i].attributes.lat,data[i].attributes.long];
             }
-            $('tbody').append(tb);
-            dataTable = $('#tb_statistik').DataTable({
-              "paging": false,
-              "lengthChange": false,
-              "searching": true,
-              "ordering": true,
-              "info": false,
-              "autoWidth": false
+            $.ajax({
+                url: API_ROOT_LUAR+'/indonesia/provinsi/',
+                dataType: 'json',
+                success: function(data) {
+                    function content(title,positif,sembuh,meninggal){
+                      return `<table border="0">
+                      <tr>
+                        <td colspan="3" align="center"><strong>${title}</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Positif</td>
+                        <td>:</td>
+                        <td>${positif}</td>
+                      </tr>
+                      <tr>
+                        <td>Sembuh</td>
+                        <td>:</td>
+                        <td>${sembuh}</td>
+                      </tr>
+                       <tr>
+                        <td>Meninggal</td>
+                        <td>:</td>
+                        <td>${meninggal}</td>
+                      </tr>
+                    </table>`;
+                    } 
+
+                    var locations = [];
+
+                    var tb,no=1;
+                    for (var i=0; i<data.length; i++) {
+                        tb += '<tr><td>' + no + '</td><td>' + data[i].attributes.Provinsi + '</td><td>' + data[i].attributes.Kasus_Posi + '</td><td>'+ data[i].attributes.Kasus_Semb + '</td><td>'+ data[i].attributes.Kasus_Meni + '</td></tr>';
+                        locations[i] = [content(data[i].attributes.Provinsi,data[i].attributes.Kasus_Posi,data[i].attributes.Kasus_Semb,data[i].attributes.Kasus_Meni), latlong[data[i].attributes.Kode_Provi][0],  latlong[data[i].attributes.Kode_Provi][1]];
+                        no++;
+                    }
+                    $('#body_statistik').append(tb);
+                    dataTable = $('#tb_statistik').DataTable({
+                      "paging": false,
+                      "lengthChange": false,
+                      "searching": true,
+                      "ordering": true,
+                      "info": false,
+                      "autoWidth": false
+                    });
+                    $("#filterBox").keyup(function() {
+                        console.log(dataTable.search(this.value).draw());
+                    }); 
+                    $('#tb_statistik_filter').hide();
+                  
+                    // start map
+                      var mymap = L.map('map').setView([-2.600029, 118.015776], 5);
+
+                      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                        maxZoom: 18,
+                        id: 'mapbox/streets-v11',
+                        tileSize: 512,
+                        zoomOffset: -1,
+                        accessToken: 'pk.eyJ1Ijoicml6YWw5NyIsImEiOiJjazhkdTJ0dXoweWQ4M2tsNmIwMm9panZ1In0.a2-JMKhdAZ450uHDKr9WRg'
+                    }).addTo(mymap);
+                     
+                         
+               
+                    
+                    for (var i = 0; i < locations.length; i++) {
+                      marker = new L.marker([locations[i][1], locations[i][2]])
+                        .bindPopup(locations[i][0])
+                        .addTo(mymap);
+                    }
+                    // End Map
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert('Error: ' + textStatus + ' - ' + errorThrown);
+                }
             });
-            $("#filterBox").keyup(function() {
-                console.log(dataTable.search(this.value).draw());
-            }); 
-            $('#tb_statistik_filter').hide();
-            
+
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert('Error: ' + textStatus + ' - ' + errorThrown);
         }
     });
+
+    
     $.ajax({
         url: API_ROOT_DALAM+'/statistik',
         dataType: 'json',
