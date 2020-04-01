@@ -138,6 +138,7 @@ $.ajax({
         beforeSend: function(){
           // Show image container
           $("#customloader").show();
+          $("#customloader2").show();
        },
         success: function(data) {
         var arrLabels = new Array();         
@@ -150,6 +151,24 @@ $.ajax({
                 arrDataSembuh[i] = data[i].attributes.jumlah_sembuh.replace(',','');
                 arrDataMeninggal[i] = data[i].attributes.jumlah_meninggal.replace(',','');
             }
+            let arrDataPositifPerDay = arrDataPositif.map((currentValue, index, array) => {
+              if(index == 0){
+                return currentValue;
+              }
+              return currentValue - arrDataPositif[index-1];
+            });
+            let arrDataSembuhPerDay = arrDataSembuh.map((currentValue, index, array) => {
+              if(index == 0){
+                return currentValue;
+              }
+              return currentValue - arrDataSembuh[index-1];
+            });
+            let arrDataMeninggalPerDay = arrDataMeninggal.map((currentValue, index, array) => {
+              if(index == 0){
+                return currentValue;
+              }
+              return currentValue - arrDataMeninggal[index-1];
+            });
            /* Chartjs (#total-coversations) */
           var ctx = document.getElementById('total-coversations').getContext('2d');
             var myChart = new Chart(ctx, {
@@ -240,11 +259,103 @@ $.ajax({
             }
             });
           /* Chartjs (#total-coversations) closed */
+
+             /* Chartjs (#total-coversations2) */
+          var ctx2 = document.getElementById('total-coversations2').getContext('2d');
+            var myChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+              labels: arrLabels,
+              datasets: [
+                {
+                  label: "Positif",
+                  borderColor: '#F32013',
+                  borderWidth: 4,
+                  backgroundColor: 'transparent',
+                  data: arrDataPositifPerDay
+                },
+                {
+                  label: "Sembuh",
+                  borderColor: '#17A2B8',
+                  borderWidth: 4,
+                  backgroundColor: 'transparent',
+                  data: arrDataSembuhPerDay
+                },
+                {
+                  label: "Meninggal",
+                  borderColor: '#FFC107',
+                  borderWidth: 4,
+                  backgroundColor: 'transparent',
+                  data: arrDataMeninggalPerDay
+                }
+              ]
+            },
+                options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              tooltips: {
+                mode: 'index',
+                titleFontSize: 12,
+                titleFontColor: '#000',
+                bodyFontColor: '#000',
+                backgroundColor: '#fff',
+                cornerRadius: 3,
+                intersect: false,
+              },
+              legend: {
+                display: true,
+                labels: {
+                  usePointStyle: true,
+                },
+              },
+              scales: {
+                xAxes: [{
+                  ticks: {
+                    fontColor: "#77778e",
+
+                   },
+                  display: true,
+                  gridLines: {
+                    display: true,
+                    color: 'rgba(119, 119, 142, 0.2)',
+                    drawBorder: false
+                  },
+                  scaleLabel: {
+                    display: false,
+                    labelString: 'Month',
+                    fontColor: 'rgba(0,0,0,0.8)'
+                  }
+                }],
+                yAxes: [{
+                  ticks: {
+                    fontColor: "#77778e",
+                   },
+                  display: true,
+                  gridLines: {
+                    display: false,
+                    color: 'rgba(119, 119, 142, 0.2)',
+                    drawBorder: false
+                  },
+                  scaleLabel: {
+                    display: false,
+                    labelString: 'sales',
+                    fontColor: 'transparent'
+                  }
+                }]
+              },
+              title: {
+                display: false,
+                text: 'Normal Legend'
+              }
+            }
+            });
+          /* Chartjs (#total-coversations2) closed */
           
         },
          complete:function(data){
         // Hide image container
         $("#customloader").hide();
+        $("#customloader2").hide();
        },
         error: function(jqXHR, textStatus, errorThrown){
             alert('Error: ' + textStatus + ' - ' + errorThrown);
