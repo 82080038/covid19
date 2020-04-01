@@ -1,5 +1,5 @@
 $(function() {
-var dataTable;
+let dataTable;
 const API_ROOT_LUAR = 'https://api.kawalcorona.com';
 const API_ROOT_DALAM = 'https://kokngopas.my.id/api';
 const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -7,7 +7,7 @@ $.ajax({
         url: API_ROOT_LUAR,
         dataType: 'json',
         success: function(data) {
-            for (var i=0; i<data.length; i++) {
+            for (let i=0; i<data.length; i++) {
               if(data[i].attributes.Country_Region == 'Indonesia'){
                 const convert = new Date(data[i].attributes.Last_Update);
                 const Tanggal = convert.getDate();
@@ -44,8 +44,8 @@ $.ajax({
         url: API_ROOT_DALAM+'/latlong/',
         dataType: 'json',
         success: function(data) {
-         var latlong = [];
-            for (var i=0; i<data.length; i++) {
+         let latlong = [];
+            for (let i=0; i<data.length; i++) {
               latlong[data[i].attributes.Kode_Provi] = [data[i].attributes.lat,data[i].attributes.long];
             }
             $.ajax({
@@ -75,10 +75,10 @@ $.ajax({
                     </table>`;
                     } 
 
-                    var locations = [];
+                    let locations = [];
 
-                    var tb,no=1;
-                    for (var i=0; i<data.length; i++) {
+                    let tb,no=1;
+                    for (let i=0; i<data.length; i++) {
                         tb += '<tr><td>' + no + '</td><td>' + data[i].attributes.Provinsi + '</td><td>' + data[i].attributes.Kasus_Posi + '</td><td>'+ data[i].attributes.Kasus_Semb + '</td><td>'+ data[i].attributes.Kasus_Meni + '</td></tr>';
                         locations[i] = [content(data[i].attributes.Provinsi,data[i].attributes.Kasus_Posi,data[i].attributes.Kasus_Semb,data[i].attributes.Kasus_Meni), latlong[data[i].attributes.Kode_Provi][0],  latlong[data[i].attributes.Kode_Provi][1]];
                         no++;
@@ -98,7 +98,7 @@ $.ajax({
                     $('#tb_statistik_filter').hide();
                   
                     // start map
-                      var mymap = L.map('map').setView([-2.600029, 118.015776], 4);
+                      let mymap = L.map('map').setView([-2.600029, 118.015776], 4);
 
                       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -112,7 +112,7 @@ $.ajax({
                          
                
                     
-                    for (var i = 0; i < locations.length; i++) {
+                    for (let i = 0; i < locations.length; i++) {
                       marker = new L.marker([locations[i][1], locations[i][2]])
                         .bindPopup(locations[i][0])
                         .addTo(mymap);
@@ -141,11 +141,11 @@ $.ajax({
           $("#customloader2").show();
        },
         success: function(data) {
-        var arrLabels = new Array();         
-        var arrDataPositif = new Array();
-        var arrDataSembuh = new Array();
-        var arrDataMeninggal = new Array();
-          for (var i=0; i<data.length; i++) {
+        let arrLabels = new Array();         
+        let arrDataPositif = new Array();
+        let arrDataSembuh = new Array();
+        let arrDataMeninggal = new Array();
+          for (let i=0; i<data.length; i++) {
                 arrLabels[i] = data[i].attributes.date;
                 arrDataPositif[i] = data[i].attributes.jumlah_positif.replace(',','');
                 arrDataSembuh[i] = data[i].attributes.jumlah_sembuh.replace(',','');
@@ -170,8 +170,8 @@ $.ajax({
               return currentValue - arrDataMeninggal[index-1];
             });
            /* Chartjs (#total-coversations) */
-          var ctx = document.getElementById('total-coversations').getContext('2d');
-            var myChart = new Chart(ctx, {
+          let ctx = document.getElementById('total-coversations').getContext('2d');
+            let myChart = new Chart(ctx, {
             type: 'line',
             data: {
               labels: arrLabels,
@@ -261,8 +261,8 @@ $.ajax({
           /* Chartjs (#total-coversations) closed */
 
              /* Chartjs (#total-coversations2) */
-          var ctx2 = document.getElementById('total-coversations2').getContext('2d');
-            var myChart = new Chart(ctx2, {
+          let ctx2 = document.getElementById('total-coversations2').getContext('2d');
+            let myChart2 = new Chart(ctx2, {
             type: 'line',
             data: {
               labels: arrLabels,
