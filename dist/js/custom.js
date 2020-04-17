@@ -5,10 +5,7 @@ const API_ROOT_DALAM = 'https://kokngopas.my.id/api';
 const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 $.ajax({
         url: API_ROOT_LUAR,
-        xhrFields: {
-          withCredentials: true
-        },
-        dataType: 'json',
+        dataType: 'jsonp',
         success: function(data) {
             for (let i=0; i<data.length; i++) {
               if(data[i].attributes.Country_Region == 'Indonesia'){
@@ -32,10 +29,7 @@ $.ajax({
 
     $.ajax({
         url: API_ROOT_LUAR+'/indonesia/',
-        xhrFields: {
-          withCredentials: true
-        },
-        dataType: 'json',
+        dataType: 'jsonp',
         success: function(data) {
           document.getElementById("p").innerHTML=data[0].positif + ' Orang';
           document.getElementById("s").innerHTML=data[0].sembuh+ ' Orang';
@@ -48,10 +42,7 @@ $.ajax({
 
     $.ajax({
         url: API_ROOT_DALAM+'/latlong/',
-        xhrFields: {
-          withCredentials: true
-        },
-        dataType: 'json',
+        dataType: 'jsonp',
         success: function(data) {
          let latlong = [];
             for (let i=0; i<data.length; i++) {
@@ -59,10 +50,7 @@ $.ajax({
             }
             $.ajax({
                 url: API_ROOT_LUAR+'/indonesia/provinsi/',
-                xhrFields: {
-                  withCredentials: true
-                },
-                dataType: 'json',
+                dataType: 'jsonp',
                 success: function(data) {
                     function content(title,positif,sembuh,meninggal){
                       return `<table border="0">
@@ -146,10 +134,7 @@ $.ajax({
     
     $.ajax({
         url: API_ROOT_DALAM+'/statistik',
-        xhrFields: {
-          withCredentials: true
-        },
-        dataType: 'json',
+        dataType: 'jsonp',
         beforeSend: function(){
           // Show image container
           $("#customloader").show();
