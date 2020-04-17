@@ -147,9 +147,9 @@ $.ajax({
         let arrDataMeninggal = new Array();
           for (let i=0; i<data.length; i++) {
                 arrLabels[i] = data[i].attributes.date;
-                arrDataPositif[i] = data[i].attributes.jumlah_positif.replace(',','');
-                arrDataSembuh[i] = data[i].attributes.jumlah_sembuh.replace(',','');
-                arrDataMeninggal[i] = data[i].attributes.jumlah_meninggal.replace(',','');
+                arrDataPositif[i] = data[i].attributes.jumlah_positif;
+                arrDataSembuh[i] = data[i].attributes.jumlah_sembuh;
+                arrDataMeninggal[i] = data[i].attributes.jumlah_meninggal;
             }
             let arrDataPositifPerDay = arrDataPositif.map((currentValue, index, array) => {
               if(index == 0){
