@@ -22,7 +22,7 @@ $.ajax({
             }
         },
         error: function(jqXHR, textStatus, errorThrown){
-            alert('Error: ' + textStatus + ' - ' + errorThrown);
+            alert('Terjadi Kesalahan, Silahkan Reload Ulang');
         }
     });
 
@@ -36,7 +36,7 @@ $.ajax({
           document.getElementById("m").innerHTML=data[0].meninggal+ ' Orang';
         },
         error: function(jqXHR, textStatus, errorThrown){
-            alert('Error: ' + textStatus + ' - ' + errorThrown);
+            alert('Terjadi Kesalahan, Silahkan Reload Ulang');
         }
     });
 
@@ -121,13 +121,13 @@ $.ajax({
                     
                 },
                 error: function(jqXHR, textStatus, errorThrown){
-                    alert('Error: ' + textStatus + ' - ' + errorThrown);
+                    alert('Terjadi Kesalahan, Silahkan Reload Ulang');
                 }
             });
 
         },
         error: function(jqXHR, textStatus, errorThrown){
-            alert('Error: ' + textStatus + ' - ' + errorThrown);
+            alert('Terjadi Kesalahan, Silahkan Reload Ulang');
         }
     });
 
@@ -358,7 +358,7 @@ $.ajax({
         $("#customloader2").hide();
        },
         error: function(jqXHR, textStatus, errorThrown){
-            alert('Error: ' + textStatus + ' - ' + errorThrown);
+            alert('Terjadi Kesalahan, Silahkan Reload Ulang');
         }
     });
   
