@@ -1,0 +1,15 @@
+{
+  "short_name": "COVID-19 IND",
+  "name": "COVID-19 Indonesia",
+  "icons": [
+    {
+      "src":"dist/img/virus.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "background_color": "#000",
+  "theme_color": "#536878",
+  "display": "standalone"
+}

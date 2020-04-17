@@ -93,7 +93,7 @@ $.ajax({
                       "autoWidth": false
                     });
                     $("#filterBox").keyup(function() {
-                        console.log(dataTable.search(this.value).draw());
+                       dataTable.search(this.value).draw();
                     }); 
                     $('#tb_statistik_filter').hide();
                   
