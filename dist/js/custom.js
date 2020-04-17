@@ -5,6 +5,9 @@ const API_ROOT_DALAM = 'https://kokngopas.my.id/api';
 const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 $.ajax({
         url: API_ROOT_LUAR,
+        xhrFields: {
+          withCredentials: true
+        },
         dataType: 'json',
         success: function(data) {
             for (let i=0; i<data.length; i++) {
@@ -29,6 +32,9 @@ $.ajax({
 
     $.ajax({
         url: API_ROOT_LUAR+'/indonesia/',
+        xhrFields: {
+          withCredentials: true
+        },
         dataType: 'json',
         success: function(data) {
           document.getElementById("p").innerHTML=data[0].positif + ' Orang';
@@ -42,6 +48,9 @@ $.ajax({
 
     $.ajax({
         url: API_ROOT_DALAM+'/latlong/',
+        xhrFields: {
+          withCredentials: true
+        },
         dataType: 'json',
         success: function(data) {
          let latlong = [];
@@ -50,6 +59,9 @@ $.ajax({
             }
             $.ajax({
                 url: API_ROOT_LUAR+'/indonesia/provinsi/',
+                xhrFields: {
+                  withCredentials: true
+                },
                 dataType: 'json',
                 success: function(data) {
                     function content(title,positif,sembuh,meninggal){
@@ -134,6 +146,9 @@ $.ajax({
     
     $.ajax({
         url: API_ROOT_DALAM+'/statistik',
+        xhrFields: {
+          withCredentials: true
+        },
         dataType: 'json',
         beforeSend: function(){
           // Show image container
