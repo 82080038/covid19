@@ -26,9 +26,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       
     }
     .add-button {
-      position: absolute;
-      top: 1px;
-      left: 1px;
+      position: fixed;
+      bottom: 0px;
+      right: 0px;
+      margin-bottom: 5px; 
+      z-index: 999999;
     }
   </style>
   <!-- Google Font: Source Sans Pro -->
@@ -240,7 +242,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </footer>
 </div>
 <!-- ./wrapper -->
-<button class="add-button">Add to home screen</button>
+<button class="add-button btn btn-primary btn-sm">Add to home screen</button>
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
